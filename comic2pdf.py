@@ -4,13 +4,13 @@
 # -- Only works with comicbook files that contain JPG's (for now).
 # -- The script should be in the same directory the file(s) to convert are in.
 #
-# Author:  MComas1
-# Date:  14-09-18
+# Author:  codingcashe
+# Date:  25-08-19
 #
 # License:  You can do what you want with it.
 # Mainly based on a script by Bransorem (https://github.com/bransorem/comic2pdf) 
 
-import os, sys, zipfile, patoolib
+import os, sys, zipfile, patoolib, rarfile
 from PIL import Image
 import PIL.ExifTags
 failed = False
@@ -23,20 +23,6 @@ def olog_info (msg, out=sys.stdout):
     """Print info message to stdout (or any other given output)."""
     print("patool:", msg, file=out)
 
-def handlerar2(filein):
-	tmp_dir = os.getcwd()+"\\Teemp\\"
-	os.mkdir(tmp_dir)
-	original = sys.stdout
-	sys.stdout = open("comic2pdf_log.txt","a")
-	patoolib.util.log_info = nlog_info
-	patoolib.extract_archive(filein, outdir=tmp_dir)
-	newfile = filein.replace(filein[-4:],".pdf")
-	toPDF2(newfile,tmp_dir,7)
-	cleanDir(tmp_dir)
-	print("------------------------------------------------------------")
-	
-	sys.stdout = original
-	print("\""+newfile[:-4]+"\" successfully converted!")
 
 def handlezip(filein):
 	zip_ref = zipfile.ZipFile(filein, 'r')
@@ -50,6 +36,20 @@ def handlezip(filein):
 	except:
 		aaa = 223
 	print("\""+newfile[:-4]+"\" successfully converted!")
+
+def handlerar(filein):
+	zip_ref = rarfile.RarFile(filein, 'r')
+	tmp_dir = os.getcwd()+"\\Teemp\\"
+	zip_ref.extractall(tmp_dir)
+	zip_ref.close()
+	newfile = filein.replace(filein[-4:],".pdf")
+	toPDF2(newfile,tmp_dir,0)
+	try:
+		cleanDir(tmp_dir)
+	except:
+		aaa = 223
+	print("\""+newfile[:-4]+"\" successfully converted!")
+
 	
 def toPDF2(filename, newdir,ii):
 	ffiles = os.listdir(newdir)
@@ -96,7 +96,7 @@ def opendir(directory):
 			handlezip(file)
 		elif (file[-4:] == '.cbr' or file[-4:] == '.rar'):
 			# change to rar
-			handlerar2(file)
+			handlerar(file)
 	if failed:
 		print ("WARNING: some items were skipped")
 
