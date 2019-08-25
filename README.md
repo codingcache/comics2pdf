@@ -11,10 +11,10 @@ python comic2pdf.py
 
 ### Prerequisites
 
-Script in Python 3.6 (probably won't work with Python 2.x versions). Requires the "zipfile", "patool" and "pillow"(aka PIL) modules in order to work correctly. To install them run the following commands:
+Script in Python 3.7 (probably won't work with Python 2.x versions). Requires the "zipfile", "patool" and "pillow"(aka PIL) modules in order to work correctly. To install them run the following commands:
 
 ```
-pip install zipfile
+pip install rarfile
 ```
 ```
 pip install patool
@@ -22,7 +22,13 @@ pip install patool
 ```
 pip install pillow
 ```
-In windows you'll need to run cmd.exe using the "run as administrator" option for those commands to work.
+In windows you'll need to run cmd.exe using the "run as administrator" option for those commands to work.  
+
+Install software **Winrar**, and copy the file **Unrar.exe** brought by Winrar into the same directory of the script.  
+Add Winrar directory into the environmental variable PATH.
+
+
+
 
 ### Installing
 
@@ -40,6 +46,6 @@ It's a good idea to rename (before running the script) the .cbr/.cbz files that 
 
 ## Authors and Acknowledgments
 
-* **MComas1**
-
-Based on a python script by **bransorem** (https://github.com/bransorem/comic2pdf).
+* **codingcache**
+* **MComas1**(https://github.com/MComas1/comic2pdf)
+* **bransorem** (https://github.com/bransorem/comic2pdf).
