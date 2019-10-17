@@ -1,14 +1,9 @@
-# Converts .cbr and .cbz files to .pdf
-#
-# Use:  python comic2pdf.py
-# -- Only works with comicbook files that contain JPG's (for now).
-# -- The script should be in the same directory the file(s) to convert are in.
-#
-# Author:  codingcashe
-# Date:  25-08-19
-#
-# License:  You can do what you want with it.
-# Mainly based on a script by Bransorem (https://github.com/bransorem/comic2pdf) 
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Aug 23 16:18:01 2019
+
+@author: Yihan Huang
+"""
 
 import os, sys, zipfile, patoolib, rarfile
 from PIL import Image
@@ -61,8 +56,10 @@ def toPDF2(filename, newdir,ii):
 		firstP = True
 		im = None
 		for image in ffiles:
-			if (image.endswith(".jpg") or image.endswith(".JPG") or image.endswith(".jpeg") or image.endswith(".JPEG")):
+			if (image.endswith(".jpg") or image.endswith(".JPG") or image.endswith(".jpeg") or image.endswith(".JPEG") or image.endswith(".webp")):
 				im1 = Image.open(newdir+image)
+				im1 = im1.resize((int(im1.width*3000/im1.height),3000), Image.ANTIALIAS)
+
 				try:
 					im1.save(newdir+image,dpi=(96,96))
 				except:
